@@ -8,34 +8,52 @@
 */
 void execute_command(const char *cmd)
 {
-         // Split the command into its components.
-    char *command = strdup(cmd); // Duplicate the input to avoid modifying it.
-    char *arg = strtok(command, " ");
-    int status;
+	char *args[MAX_ARG_LENGTH];
+    int arg_count = 0, status;
+    char *token, *path, *path_copy, *path_token;
+    char full_path[MAX_INPUT_LENGTH];
+    pid_t pid;
 
-    // Check if the command is not empty.
-    if (arg == NULL) {
-        free(command);
+    token = strtok((char *)cmd, " ");
+    while (token != NULL && arg_count < MAX_ARG_LENGTH - 1) {
+        args[arg_count] = token;
+        arg_count++;
+        token = strtok(NULL, " ");
+    }
+    args[arg_count] = NULL;
+
+    if (arg_count == 0) {
+        fprintf(stderr, "No command provided.\n");
         return;
     }
 
-    // Attempt to execute the command.
-    if (fork() == 0) {
-        // Child process
-        execlp(arg, arg, NULL);
+    /*Check if the command exists in PATH*/
+    path = getenv("PATH");
+   path_copy = _strdup(path);
+    path_token = strtok(path_copy, ":");
 
-        // If execlp returns, the command does not exist.
-        printf("Command not found: %s\n", arg);
-        exit(1);
-    } else {
-        // Parent process
-        status;
-        wait(&status);
+    while (path_token != NULL) {
+        snprintf(full_path, sizeof(full_path), "%s/%s", path_token, args[0]);
 
-        if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT) {
-            printf("^C\n");
+        if (access(full_path, X_OK) == 0) {
+            pid = fork();
+
+            if (pid == -1) {
+                perror("fork");
+            } else if (pid == 0) {
+                /*Child process*/
+                execve(full_path, args, NULL);
+                perror("execve"); /*execve only returns if there's an error*/
+                _exit(EXIT_FAILURE);
+            } else {
+                /* Parent process*/
+                waitpid(pid, &status, 0);
+                return;
+            }
         }
-    }
 
-    free(command);
+        path_token = strtok(NULL, ":");
+    }
+	_printf("Command not found: %s\n", args[0]);
+    free(path_copy);
 }

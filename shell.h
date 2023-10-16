@@ -10,9 +10,11 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-void _puts(const char *str);
+#include <fcntl.h>
+#include <dirent.h>
+#include <signal.h>
 char *_fgets(char *buf, int size, FILE *stream);
-void _printf(char *string, int descriptor);
+int _printf(const char *format, ...);
 /*String functions*/
 int _strlen(const char *s);
 int _strcmp(char *s1, char *s2);
@@ -25,10 +27,8 @@ int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strdup(const char *src);
 size_t _strcspn(const char *str, const char *chars);
 
-void prompt();
+void prompt(void);
 void parse_input(char *input, char **cmd, char *args[]);
-int _putchar(char c);/*for putchar*/
-int check_cmd(char *cmd);
 int parse_command(char *input, char *args[]);
 void execute_command(const char *cmd);
 void _env();
