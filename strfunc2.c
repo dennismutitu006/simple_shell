@@ -21,15 +21,15 @@ int _strncmp(const char *s1, const char *s2, size_t n);
  */
 char *_strchr(char *s, char c)
 {
-        int i;
+	int i;
 
-        for (i = 0; s[i]; i++)
-        {
-                if (s[i] == c)
-                        return (s + i);
-        }
+	for (i = 0; s[i]; i++)
+	{
+		if (s[i] == c)
+			return (s + i);
+	}
 
-        return (NULL);
+	return (NULL);
 }
 
 /**
@@ -42,22 +42,22 @@ char *_strchr(char *s, char c)
  */
 int _strspn(char *s, char *accept)
 {
-        int b = 0;/*bytes*/
-        int i;
+	int b = 0;/*bytes*/
+	int i;
 
-        while (*s)
-        {
-                for (i = 0; accept[i]; i++)
-                {
-                        if (*s == accept[i])
-                        {
-                                b++;
-                                break;
-                        }
-                }
-                s++;
-        }
-        return (b);
+	while (*s)
+	{
+		for (i = 0; accept[i]; i++)
+		{
+			if (*s == accept[i])
+			{
+				b++;
+				break;
+			}
+		}
+		s++;
+	}
+	return (b);
 }
 
 /**
@@ -71,16 +71,16 @@ int _strspn(char *s, char *accept)
  */
 int _strcmp(char *s1, char *s2)
 {
-        while (*s1 && *s2 && *s1 == *s2)
-        {
-                s1++;
-                s2++;
-        }
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
 
-        if (*s1 != *s2)
-                return (*s1 - *s2);
+	if (*s1 != *s2)
+		return (*s1 - *s2);
 
-        return (0);
+	return (0);
 }
 
 /**
@@ -95,17 +95,17 @@ int _strcmp(char *s1, char *s2)
  */
 int _strncmp(const char *s1, const char *s2, size_t n)
 {
-        size_t i;
+	size_t i;
 
-        for (i = 0; s1[i] && s2[i] && i < n; i++)
-        {
-                if (s1[i] > s2[i])
-                        return (s1[i] - s2[i]);
-                else if (s1[i] < s2[i])
-                        return (s1[i] - s2[i]);
-        }
-        if (i == n)
-                return (0);
-        else
-                return (-15);
+	for (i = 0; s1[i] && s2[i] && i < n; i++)
+	{
+		if (s1[i] > s2[i])
+			return (s1[i] - s2[i]);
+		else if (s1[i] < s2[i])
+			return (s1[i] - s2[i]);
+	}
+	if (i == n)
+		return (0);
+	else
+		return (-15);
 }
