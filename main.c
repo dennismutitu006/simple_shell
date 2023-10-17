@@ -1,41 +1,73 @@
 #include "shell.h"
-/**
- * main - this is our main source file for the simple shell project.
- * Return: Always 0 on success.
- */
-int main(void)
-{
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t input_length;
-	char *args[MAX_ARG_LENGTH];
 
-	while (1)
+/**
+ * free_data - frees data structure
+ *
+ * @datash: data structure
+ * Return: no return
+ */
+void free_data(data_shell *datash)
+{
+	unsigned int j;
+
+	for (j = 0; datash->_environ[j]; j++)
 	{
-		prompt();
-		input_length = getline(&input, &input_size, stdin);
-		if (input_length == -1)
-		{
-			perror("getline");
-			break;
-		}
-		/*Remove the newline character*/
-		if (input_length > 0 && input[input_length - 1] == '\n')
-			input[input_length - 1] = '\0';
-		if (_strcmp(input, "^C") == 0)
-			continue;
-		if (parse_command(input, args))
-		{
-			if (_strcmp(args[0], "exit") == 0)
-			{
-				free(input);
-				exit(0);
-			} else if (_strcmp(args[0], "_env") == 0)
-				_env();
-			else
-				execute_command(input, args);
-		}
+		free(datash->_environ[j]);
 	}
-	free(input);
-	return (0);
+
+	free(datash->_environ);
+	free(datash->pid);
+}
+
+/**
+ * set_data - Initialize data structure
+ *
+ * @datash: data structure
+ * @av: argument vector
+ * Return: no return
+ */
+void set_data(data_shell *datash, char **av)
+{
+	unsigned int i;
+
+	datash->av = av;
+	datash->input = NULL;
+	datash->args = NULL;
+	datash->status = 0;
+	datash->counter = 1;
+
+	for (i = 0; environ[i]; i++)
+		;
+
+	datash->_environ = malloc(sizeof(char *) * (i + 1));
+
+	for (i = 0; environ[i]; i++)
+	{
+		datash->_environ[i] = _strdup(environ[i]);
+	}
+
+	datash->_environ[i] = NULL;
+	datash->pid = _itoa(getpid());
+}
+
+/**
+ * main - Entry point
+ *
+ * @ac: argument count
+ * @av: argument vector
+ *
+ * Return: 0 on success.
+ */
+int main(int ac, char **av)
+{
+	data_shell datash;
+	(void) ac;
+
+	signal(SIGINT, get_sign);
+	set_data(&datash, av);
+	shell_loop(&datash);
+	free_data(&datash);
+	if (datash.status < 0)
+		return (255);
+	return (datash.status);
 }
