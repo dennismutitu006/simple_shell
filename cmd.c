@@ -10,7 +10,7 @@ int parse_command(char *input, char *args[])
 {
 	char *token;/*Keep track of current token in process*/
 	int arg_count = 0;/*Counts no. of args*/
-	
+
 	/*Tokenize the input string using tab and new line*/
 	token = strtok(input, " \t\n");
 	while (token != NULL)

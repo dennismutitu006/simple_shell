@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
-* fgets - This is a custom fgets
+* _fgets - This is a custom fgets
 * @buf: Buffer
 * @size: Size
 * @stream: specify the file descriptor from
@@ -12,7 +12,7 @@ char *_fgets(char *buf, int size, FILE *stream)
 {
 	int fd, i;
 	char c;
-	
+
 	if (size <= 0 || buf == NULL || stream == NULL)
 		return (NULL);
 	fd = fileno(stream);/*Get the file descriptor from FILE*/

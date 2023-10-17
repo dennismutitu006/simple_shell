@@ -36,5 +36,5 @@ void prompt(void);
 void parse_input(char *input, char **cmd, char *args[]);
 int parse_command(char *input, char *args[]);
 void execute_command(const char *cmd);
-void _env();
+void _env(void);
 #endif

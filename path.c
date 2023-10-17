@@ -13,15 +13,17 @@ void execute_command(const char *cmd)
 	char *token, *path, *path_copy, *path_token;
 	char full_path[MAX_INPUT_LENGTH];
 	pid_t pid;
-	
+
 	token = strtok((char *)cmd, " ");
-	while (token != NULL && arg_count < MAX_ARG_LENGTH - 1) {
+	while (token != NULL && arg_count < MAX_ARG_LENGTH - 1)
+	{
 		args[arg_count] = token;
 		arg_count++;
 		token = strtok(NULL, " ");
 	}
 	args[arg_count] = NULL;
-	if (arg_count == 0) {
+	if (arg_count == 0)
+	{
 		_printf("No command provided.\n");
 		return;
 	}
@@ -32,16 +34,19 @@ void execute_command(const char *cmd)
 	while (path_token != NULL)
 	{
 		snprintf(full_path, sizeof(full_path), "%s/%s", path_token, args[0]);
-		if (access(full_path, X_OK) == 0) {
+		if (access(full_path, X_OK) == 0)
+		{
 			pid = fork();
-			if (pid == -1) {
+			if (pid == -1)
 				perror("fork");
-			} else if (pid == 0) {
+			else if (pid == 0)
+			{
 				/*Child process*/
 				execve(full_path, args, NULL);
 				perror("execve"); /*execve only returns if there's an error*/
 				_exit(EXIT_FAILURE);
-			} else {
+			} else
+			{
 				/* Parent process*/
 				waitpid(pid, &status, 0);
 				return;

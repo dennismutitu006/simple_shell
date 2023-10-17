@@ -10,10 +10,10 @@ int _printf(const char *format, ...)
 {
 	va_list(var_args);
 	int count = 0;
-	
+
 	if (format == NULL)
 		return (-1);
-	
+
 	va_start(var_args, format);
 	while (*format != '\0')
 	{
@@ -29,17 +29,19 @@ int _printf(const char *format, ...)
 			{
 				int this_integer = va_arg(var_args, int);
 				char this_str[20];
-				
+
 				sprintf(this_str, "%d", this_integer);
 				count += write(1, this_str, _strlen(this_str));
-			} else if (*format == 'c') {
+			} else if (*format == 'c')
+			{
 				char c = va_arg(var_args, int);
-			
+
 				write(1, &c, 1);
 				count++;
-			} else if (*format == 's') {
+			} else if (*format == 's')
+			{
 				char *str = va_arg(var_args, char *);
-			
+
 				write(1, str, _strlen(str));
 				count++;
 			}

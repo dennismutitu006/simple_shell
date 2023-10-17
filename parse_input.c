@@ -11,7 +11,7 @@ void parse_input(char *input, char **cmd, char *args[])
 {
 	char *token = strtok(input, " ");
 	int arg_count = 0;
-	
+
 	if (token != NULL)
 	{
 		*cmd = token;
@@ -21,7 +21,6 @@ void parse_input(char *input, char **cmd, char *args[])
 			arg_count++;
 		}
 		args[arg_count] = NULL;
-	} else {
+	} else
 		*cmd = NULL;
-	}
 }
