@@ -35,6 +35,7 @@ size_t _strcspn(const char *str, const char *chars);
 void prompt(void);
 void parse_input(char *input, char **cmd, char *args[]);
 int parse_command(char *input, char *args[]);
-void execute_command(const char *cmd);
+/*void execute_command(const char *cmd);*/
+void execute_command(const char *cmd, char *const args[]);
 void _env(void);
 #endif

@@ -33,7 +33,7 @@ int main(void)
 			} else if (_strcmp(args[0], "_env") == 0)
 				_env();
 			else
-				execute_command(input);
+				execute_command(input, args);
 		}
 	}
 	free(input);
