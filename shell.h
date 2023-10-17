@@ -13,6 +13,10 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <signal.h>
+
+/*Declaring an external environment variable*/
+extern char **environ;
+
 char *_fgets(char *buf, int size, FILE *stream);
 int _printf(const char *format, ...);
 /*String functions*/

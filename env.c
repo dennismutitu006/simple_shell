@@ -5,10 +5,7 @@
 */
 void _env()
 {
-        char **env;
-        /*Declaring an external environment variable*/
-        extern char **environ;
-
+	 char **env;
         /*Loop through the environment variables and print them*/
         for (env = environ; *env; env++)
         {
